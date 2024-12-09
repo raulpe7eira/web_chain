@@ -83,6 +83,9 @@ defmodule WebChainWeb do
     quote do
       # HTML escaping functionality
       import Phoenix.HTML
+      import Phoenix.HTML.Form
+      use PhoenixHTMLHelpers
+
       # Core UI components and translation
       import WebChainWeb.CoreComponents
       import WebChainWeb.Gettext
@@ -105,7 +108,7 @@ defmodule WebChainWeb do
   end
 
   @doc """
-  When used, dispatch to the appropriate controller/view/etc.
+  When used, dispatch to the appropriate controller/live_view/etc.
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
