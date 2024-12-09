@@ -1,4 +1,12 @@
 import Config
+import Dotenvy
+
+source([
+  System.get_env(),
+  ".#{config_env()}.env",
+  ".#{config_env()}.local.env",
+  System.get_env()
+])
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
@@ -19,6 +27,8 @@ import Config
 if System.get_env("PHX_SERVER") do
   config :web_chain, WebChainWeb.Endpoint, server: true
 end
+
+config :langchain, anthropic_key: env!("CLAUDE_API_KEY")
 
 if config_env() == :prod do
   database_url =
@@ -58,7 +68,7 @@ if config_env() == :prod do
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
-      # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
+      # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
@@ -89,8 +99,8 @@ if config_env() == :prod do
   # "priv/ssl/server.key". For all supported SSL configuration
   # options, see https://hexdocs.pm/plug/Plug.SSL.html#configure/1
   #
-  # We also recommend setting `force_ssl` in your endpoint, ensuring
-  # no data is ever sent via http, always redirecting to https:
+  # We also recommend setting `force_ssl` in your config/prod.exs,
+  # ensuring no data is ever sent via http, always redirecting to https:
   #
   #     config :web_chain, WebChainWeb.Endpoint,
   #       force_ssl: [hsts: true]

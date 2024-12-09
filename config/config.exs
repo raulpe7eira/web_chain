@@ -14,7 +14,7 @@ config :web_chain,
 # Configures the endpoint
 config :web_chain, WebChainWeb.Endpoint,
   url: [host: "localhost"],
-  adapter: Phoenix.Endpoint.Cowboy2Adapter,
+  adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: WebChainWeb.ErrorHTML, json: WebChainWeb.ErrorJSON],
     layout: false
@@ -43,7 +43,7 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.3.2",
+  version: "3.4.3",
   default: [
     args: ~w(
       --config=tailwind.config.js
